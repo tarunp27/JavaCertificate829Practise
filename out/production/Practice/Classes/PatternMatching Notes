@@ -1,0 +1,51 @@
+if (obj instanceof String) {
+   String s = (String) obj;
+   System.out.println(s.length());
+}
+
+// After
+
+if (obj instanceof String s) {
+   // Let pattern matching do the work!
+   System.out.println(s.length());
+}
+----------------------------------------------------------------
+// Before
+public boolean equals(Object o) {
+   if (!(o instanceof Point))
+       return false;
+   Point other = (Point) o;
+   return x == other.x
+       && y == other.y;
+}
+
+// After
+public boolean equals(Object o) {
+   return (o instanceof Point other)
+       && x == other.x
+       && y == other.y;
+}
+
+// Before
+
+var x = o instanceof Point ? ((Point)o).x : 0;
+System.out.println(x);
+
+// After
+
+var x = o instanceof Point p ? p.x : 0;
+System.out.println(x);
+
+static String formatter(Object o) {
+   String formatted = "unknown";
+   if (o instanceof Integer i) {
+       formatted = String.format("int %d", i);
+   } else if (o instanceof Long l) {
+       formatted = String.format("long %d", l);
+   } else if (o instanceof Double d) {
+       formatted = String.format("double %f", d);
+   } else if (o instanceof String s) {
+       formatted = String.format("String %s", s);
+   }
+   return formatted;
+}
